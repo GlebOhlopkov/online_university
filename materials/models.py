@@ -17,8 +17,8 @@ class Course(models.Model):
 class Lesson(models.Model):
     name = models.CharField(max_length=50, verbose_name='name')
     description = models.TextField(blank=True, null=True, verbose_name='description')
-    preview = models.ImageField(blank=True, null=True, verbose_name='preview')
-    video_link = models.CharField(max_length=150, blank=True, null=True, verbose_name='video_link')
+    preview = models.ImageField(upload_to='materials/', blank=True, null=True, verbose_name='preview')
+    video_link = models.URLField(blank=True, null=True, verbose_name='video_link')
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, verbose_name='course')
 
     def __str__(self):
