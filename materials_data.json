@@ -1,0 +1,64 @@
+[
+  {
+    "model": "materials.course",
+    "pk": 1,
+    "fields": {
+      "name": "course_1",
+      "preview": null,
+      "description": "course_1_descr"
+    }
+  },
+  {
+    "model": "materials.course",
+    "pk": 2,
+    "fields": {
+      "name": "course_2",
+      "preview": null,
+      "description": "course_2_descr"
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 1,
+    "fields": {
+      "name": "lesson_1",
+      "description": "lesson_1_descr",
+      "preview": null,
+      "video_link": null,
+      "course": 1
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 2,
+    "fields": {
+      "name": "lesson_2",
+      "description": "lesson_2_descr",
+      "preview": null,
+      "video_link": null,
+      "course": 1
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 3,
+    "fields": {
+      "name": "lesson_1",
+      "description": "lesson_1_descr",
+      "preview": null,
+      "video_link": null,
+      "course": 2
+    }
+  },
+  {
+    "model": "materials.lesson",
+    "pk": 4,
+    "fields": {
+      "name": "lesson_2",
+      "description": "lesson_2_descr",
+      "preview": null,
+      "video_link": null,
+      "course": 2
+    }
+  }
+]
