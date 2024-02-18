@@ -2,7 +2,8 @@ import json
 
 from django.core.management import BaseCommand
 
-from users.models import User, Payment
+from users.models import User
+from payments.models import Payment
 from materials.models import Course, Lesson
 
 
@@ -33,7 +34,7 @@ class Command(BaseCommand):
                                         phone=data['fields']['phone'],
                                         city=data['fields']['first_name'],
                                         avatar=data['fields']['first_name'])
-                if data['model'] == 'users.payment':
+                if data['model'] == 'payments.payment':
                     Payment.objects.create(date=data['fields']['date'],
                                            paid_summ=data['fields']['paid_summ'],
                                            payment_method=data['fields']['payment_method'],

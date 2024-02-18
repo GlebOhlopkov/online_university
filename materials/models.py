@@ -1,10 +1,13 @@
 from django.db import models
 
+from users.models import User
+
 
 class Course(models.Model):
     name = models.CharField(max_length=50, verbose_name='name')
     preview = models.ImageField(blank=True, null=True, verbose_name='preview')
     description = models.TextField(blank=True, null=True, verbose_name='description')
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='owner')
 
     def __str__(self):
         return f'{self.name}'
@@ -20,6 +23,7 @@ class Lesson(models.Model):
     preview = models.ImageField(upload_to='materials/', blank=True, null=True, verbose_name='preview')
     video_link = models.URLField(blank=True, null=True, verbose_name='video_link')
     course = models.ForeignKey(Course, on_delete=models.DO_NOTHING, verbose_name='course')
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='owner')
 
     def __str__(self):
         return f'{self.name}'
