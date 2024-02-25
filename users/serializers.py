@@ -13,7 +13,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserHideSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
-        fields = ['first_name', 'phone', 'city', 'avatar',]
+        fields = ['first_name', 'phone', 'city', 'avatar', ]
+
+#
+# class SubscriptionSerializer(serializers.ModelSerializer):
+#
+#     class Meta:
+#         model = Subscription
+#         fields = '__all__'

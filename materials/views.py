@@ -1,6 +1,9 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework import generics
+from rest_framework.response import Response
 
+from materials.paginators import MyPagePagination
 from materials.permissions import IsModerator, IsOwner
 from rest_framework.permissions import IsAuthenticated
 
@@ -11,6 +14,7 @@ from materials.serializers import CourseSerializer, LessonSerializer
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
+    pagination_class = MyPagePagination
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -27,7 +31,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 class LessonCreateAPIView(generics.CreateAPIView):
     serializer_class = LessonSerializer
-    permission_classes = [IsAuthenticated , ~IsModerator]
+    permission_classes = [IsAuthenticated, ] #IsModerator]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -36,7 +40,8 @@ class LessonCreateAPIView(generics.CreateAPIView):
 class LessonListAPIView(generics.ListAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
-    permission_classes = [IsAuthenticated, IsModerator]
+    permission_classes = [IsAuthenticated, ] #IsModerator]
+    pagination_class = MyPagePagination
 
     def get_queryset(self):
         return super().get_queryset().filter(owner=self.request.user)
