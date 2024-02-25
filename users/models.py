@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from materials.models import Course
+
 
 class User(AbstractUser):
     username = None
@@ -14,3 +16,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user')
+    course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL, verbose_name='course')

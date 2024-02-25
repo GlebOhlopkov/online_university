@@ -1,8 +1,12 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
 
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from users.models import User
+from materials.models import Course
+from users.models import User, Subscription
 from users.permissions import IsOwnerYourself
 from users.serializers import UserSerializer, UserHideSerializer
 
@@ -52,3 +56,18 @@ class UserRetrieveAPIView(generics.RetrieveAPIView):
 class UserDeleteAPIView(generics.DestroyAPIView):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated, IsOwnerYourself]
+
+
+class SubscriptionAPIView(APIView):
+    def post(self, *args, **kwargs):
+        user = self.request.user
+        course_id = int(self.request.data.get('course'))
+        course_item = get_object_or_404(Course, pk=course_id)
+        subs_item = Subscription.objects.filter(user=user, course=course_item).all()
+        if subs_item.exists():
+            subs_item.delete()
+            message = 'Subscription delete'
+        else:
+            Subscription.objects.create(user=user, course=course_item)
+            message = 'Subscription create'
+        return Response({"message": message})
