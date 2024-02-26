@@ -37,8 +37,8 @@ class CourseAPITest(APITestCase):
             status.HTTP_200_OK
         )
 
-    def get_list_lesson(self):
-        response = self.client.get('/materials/lesson')
+    def test_get_list_lesson(self):
+        response = self.client.get(reverse('materials:lesson_list'))
 
         self.assertEqual(
             response.status_code,
@@ -84,3 +84,6 @@ class CourseAPITest(APITestCase):
             response.status_code,
             status.HTTP_200_OK
         )
+
+    def tearDown(self):
+        pass
