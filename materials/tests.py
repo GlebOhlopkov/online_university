@@ -63,7 +63,7 @@ class CourseAPITest(APITestCase):
         )
 
     def test_delete_lesson(self):
-        response = self.client.delete('/materials/lesson/delete/1/')
+        response = self.client.delete('/materials/lesson/delete/3/')
 
         self.assertEqual(
             response.status_code,
@@ -76,9 +76,8 @@ class CourseAPITest(APITestCase):
             'description': 'test'
         }
         response = self.client.patch(
-            '/materials/lesson/update/1/',
+            '/materials/lesson/update/6/',
             data=data)
-        print(response.json())
 
         self.assertEqual(
             response.status_code,
