@@ -18,3 +18,5 @@ class Payment(models.Model):
                                     verbose_name='paid_lesson')
     paid_summ = models.FloatField(verbose_name='paid_summ')
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD_CHOICES, verbose_name='paid_type')
+    success_url = models.CharField(max_length=400, verbose_name='success_url')
+    services_id = models.CharField(max_length=200, verbose_name='services_id')
