@@ -39,7 +39,7 @@ class PaymentCourseAPIView(APIView):
         course_id = self.request.data['course']
         try:
             course_item = get_object_or_404(Course, pk=course_id)
-            url_payment = create_url_stripe_sessions(course_item)
+            url_payment_data = create_url_stripe_sessions(course_item)
             massage = 'Url for paid create'
             payment_data = {
                 'user': user,
@@ -47,10 +47,12 @@ class PaymentCourseAPIView(APIView):
                 'paid_course': course_item,
                 'paid_summ': course_item.price,
                 'payment_method': 'CARD',
+                'success_url': url_payment_data['url'],
+                'services_id': url_payment_data['id'],
             }
             payment = Payment.objects.create(**payment_data)
             payment.save()
-            return Response({'massage':massage, 'url': url_payment})
+            return Response({'massage':massage, 'url': url_payment_data['url']})
         except:
             massage = 'Wrong course ID'
             return Response({'massage': massage})
