@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from materials.models import Course, Lesson
 from materials.serializers import CourseSerializer, LessonSerializer
 from materials.services import create_url_stripe_sessions
+from materials.tasks import send_mail_for_course_update
 from payments.models import Payment
 
 
@@ -21,6 +22,17 @@ class CourseViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        obj = self.get_object()
+        course = Course.objects.filter(name=obj)
+        course_id = course[0].id
+        send_mail_for_course_update.delay(course_id)
+        serializer = self.get_serializer(obj, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     def get_permissions(self):
         if self.action in ('create',):
